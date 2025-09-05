@@ -21,15 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎉 Added
 
 - **🐳 Docker Support**: Complete containerization for easy deployment
-  - `Dockerfile` with Alpine Linux for lightweight images
-  - `docker-compose.yml` for orchestration with data persistence
-  - Automated deployment scripts (`deploy.bat` for Windows, `deploy.sh` for Linux/Mac)
-  - Development and production Docker configurations
+    - `Dockerfile` with Alpine Linux for lightweight images
+    - `docker-compose.yml` for orchestration with data persistence
+    - Automated deployment scripts (`deploy.bat` for Windows, `deploy.sh` for Linux/Mac)
+    - Development and production Docker configurations
 - **📖 Docker Documentation**: Comprehensive `DOCKER.md` guide with:
-  - 2-minute quick start instructions
-  - Advanced configuration options
-  - Troubleshooting guide
-  - Monitoring and maintenance commands
+    - 2-minute quick start instructions
+    - Advanced configuration options
+    - Troubleshooting guide
+    - Monitoring and maintenance commands
 - **🔒 Security Improvements**: Non-root user execution in containers
 - **📊 Resource Management**: CPU and memory limits for production deployments
 - **🔄 Auto-restart**: Automatic bot restart on failures

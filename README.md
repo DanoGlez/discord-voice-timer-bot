@@ -98,19 +98,22 @@
 #### ⚡ Super Quick Deployment
 
 1. **Get the code**
+
     ```bash
     git clone https://github.com/DanoGlez/discord-voice-timer-bot.git
     cd discord-voice-timer-bot
     ```
 
 2. **One-click deployment**
-    
+
     **Windows:**
+
     ```cmd
     deploy.bat
     ```
-    
+
     **Linux/macOS:**
+
     ```bash
     chmod +x deploy.sh && ./deploy.sh
     ```
@@ -170,13 +173,17 @@ tar -czf bot-backup-$(date +%Y%m%d).tar.gz data/
 ### Advanced Docker Configurations
 
 #### Development Mode
+
 Perfect for testing changes:
+
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
 #### Production Mode
+
 Optimized for servers:
+
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
@@ -184,10 +191,12 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ### Troubleshooting
 
 **Bot won't start?**
+
 1. Check your token: `cat .env | grep DISCORD_TOKEN`
 2. View logs: `docker-compose logs`
 
 **Need to reset everything?**
+
 ```bash
 docker-compose down
 docker-compose build --no-cache
