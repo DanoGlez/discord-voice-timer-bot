@@ -9,13 +9,13 @@ RUN apk add --no-cache python3 make g++ && \
     ln -sf python3 /usr/bin/python
 
 # Copy dependency files
-COPY ../package*.json ./
+COPY package*.json ./
 
 # Install production dependencies only
 RUN npm ci --only=production && npm cache clean --force
 
 # Copy source code
-COPY ../ .
+COPY . .
 
 # Create directory for persistent data
 RUN mkdir -p /app/data && chmod 755 /app/data
