@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🎉 Added
+
+- **🤖 Bot Deployment**: Bot is now live and available for public use
+  - Added Discord invite link to README.md
+  - Bot deployed and ready to be added to Discord servers
+  - Public authorization URL: `https://discord.com/oauth2/authorize?client_id=1413627584150769855`
+
+### 🔧 Changed
+
+- **📁 Docker Structure Reorganization**: Moved all Docker-related files to `docker/` directory for better organization
+  - Moved `Dockerfile`, `docker-compose*.yml`, and deployment scripts to `docker/` folder
+  - Created `docker/scripts/` subdirectory for deployment scripts
+  - Added `Makefile` with simplified commands (`make deploy`, `make logs`, etc.)
+  - Updated all documentation to reflect new structure
+  - Created `docker/README.md` for Docker-specific documentation
+  - Added `DEPLOY.md` for quick reference
+
 ### Planned
 
 - Automated testing system

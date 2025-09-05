@@ -40,6 +40,14 @@
 - 🔇 **Deafened users**: Don't count time (can't hear)
 - ✅ **Only active users**: Who are actually participating in the channel
 
+## 🤖 Add Bot to Your Server
+
+**Ready to use? Add our bot to your Discord server!**
+
+[![Add to Discord](https://img.shields.io/badge/Add%20to%20Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/oauth2/authorize?client_id=1413627584150769855)
+
+Or copy this link: `https://discord.com/oauth2/authorize?client_id=1413627584150769855`
+
 ## 🚀 Installation
 
 ### Prerequisites
@@ -98,24 +106,25 @@
 #### ⚡ Super Quick Deployment
 
 1. **Get the code**
-
     ```bash
     git clone https://github.com/DanoGlez/discord-voice-timer-bot.git
     cd discord-voice-timer-bot
     ```
 
 2. **One-click deployment**
-
-    **Windows:**
-
-    ```cmd
-    deploy.bat
-    ```
-
-    **Linux/macOS:**
-
+    
+    **Using Make (recommended):**
     ```bash
-    chmod +x deploy.sh && ./deploy.sh
+    make deploy
+    ```
+    
+    **Using scripts:**
+    ```bash
+    # Windows
+    ./docker/scripts/deploy.bat
+    
+    # Linux/macOS
+    ./docker/scripts/deploy.sh
     ```
 
 3. **That's it!** 🎉 Your bot is now running and will automatically restart if it crashes.
@@ -129,7 +138,8 @@ If you prefer to do it step by step:
 cp .env.example .env
 # Edit .env and add your DISCORD_TOKEN
 
-# 2. Build and start
+# 2. Navigate to docker directory and start
+cd docker
 docker-compose up -d
 
 # 3. Check if it's running
@@ -141,18 +151,18 @@ docker-compose logs -f
 #### Essential Commands
 
 ```bash
-# 📊 View real-time logs
+# Using Make (from project root)
+make logs          # 📊 View real-time logs
+make down          # ⏹️ Stop the bot
+make restart       # 🔄 Restart the bot
+make status        # 📈 Check bot status
+
+# Or using Docker Compose (from docker/ directory)
+cd docker
 docker-compose logs -f
-
-# ⏹️ Stop the bot
 docker-compose down
-
-# 🔄 Restart the bot
 docker-compose restart
-
-# 📈 Check bot status and resource usage
 docker-compose ps
-docker stats discord-voice-timer-bot
 ```
 
 #### Updates & Maintenance
@@ -160,11 +170,11 @@ docker stats discord-voice-timer-bot
 ```bash
 # 🔄 Update to latest version
 git pull
-docker-compose build
-docker-compose up -d
+make build
+make up
 
 # 🧹 Clean up old images (optional)
-docker system prune -f
+make clean
 
 # 💾 Backup your bot data
 tar -czf bot-backup-$(date +%Y%m%d).tar.gz data/
@@ -173,19 +183,17 @@ tar -czf bot-backup-$(date +%Y%m%d).tar.gz data/
 ### Advanced Docker Configurations
 
 #### Development Mode
-
 Perfect for testing changes:
-
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+make dev
+# Or manually: cd docker && docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
 #### Production Mode
-
 Optimized for servers:
-
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+make prod
+# Or manually: cd docker && docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 ### Troubleshooting
@@ -196,11 +204,10 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 2. View logs: `docker-compose logs`
 
 **Need to reset everything?**
-
 ```bash
-docker-compose down
-docker-compose build --no-cache
-docker-compose up -d
+make down
+make clean
+make deploy
 ```
 
 **For more detailed troubleshooting, see [DOCKER.md](DOCKER.md)**
@@ -229,10 +236,13 @@ PORT=3000
 ### Configuration Files
 
 - 📄 **`.env.example`** - Environment variables template
-- 🐳 **`docker-compose.yml`** - Main Docker configuration
-- 🔧 **`docker-compose.dev.yml`** - Development environment settings
-- 🏭 **`docker-compose.prod.yml`** - Production optimized settings
-- 🚀 **`deploy.bat` / `deploy.sh`** - One-click deployment scripts
+- � **`docker/`** - Complete Docker configuration directory
+  - �🐳 **`Dockerfile`** - Container image definition
+  - 📋 **`docker-compose.yml`** - Main Docker configuration
+  - 🔧 **`docker-compose.dev.yml`** - Development environment settings
+  - 🏭 **`docker-compose.prod.yml`** - Production optimized settings
+  - � **`scripts/deploy.{sh,bat}`** - Deployment scripts
+- ⚙️ **`Makefile`** - Simplified Docker management commands
 
 ## �📖 Commands
 
