@@ -11,22 +11,22 @@ class CommandHandler {
 
     async registerSlashCommands() {
         if (!process.env.DISCORD_TOKEN || !this.client.user) {
-            console.error('❌ No se puede registrar comandos sin token o cliente');
+            console.error('❌ Cannot register commands without token or client');
             return;
         }
 
         try {
             const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
-            console.log('🔄 Registrando slash commands...');
+            console.log('🔄 Registering slash commands...');
 
             await rest.put(Routes.applicationCommands(this.client.user.id), {
                 body: config.SLASH_COMMANDS,
             });
 
-            console.log('✅ Slash commands registrados correctamente');
+            console.log('✅ Slash commands registered successfully');
         } catch (error) {
-            console.error('❌ Error registrando slash commands:', error);
+            console.error('❌ Error registering slash commands:', error);
         }
     }
 
@@ -51,9 +51,9 @@ class CommandHandler {
                     break;
             }
         } catch (error) {
-            console.error('Error ejecutando comando:', error);
+            console.error('Error executing command:', error);
 
-            const errorMessage = '❌ Ocurrió un error al ejecutar el comando.';
+            const errorMessage = '❌ An error occurred while executing the command.';
 
             if (interaction.replied || interaction.deferred) {
                 await interaction.followUp({ content: errorMessage, ephemeral: true });
@@ -66,7 +66,7 @@ class CommandHandler {
     async handleConfigCommand(interaction) {
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             return interaction.reply({
-                content: '❌ Necesitas permisos de administrador para usar este comando.',
+                content: '❌ You need administrator permissions to use this command.',
                 ephemeral: true,
             });
         }
@@ -78,7 +78,7 @@ class CommandHandler {
         });
 
         await interaction.reply({
-            content: `✅ Canal de logs configurado: ${channel}`,
+            content: `✅ Log channel configured: ${channel}`,
             ephemeral: true,
         });
     }
@@ -90,17 +90,17 @@ class CommandHandler {
         const now = new Date();
         let year = now.getFullYear();
         let month = now.getMonth() + 1;
-        let period = 'mes';
+        let period = 'month';
 
         const periodArg = interaction.options.getString('periodo');
 
         if (periodArg) {
             const periodLower = periodArg.toLowerCase();
 
-            if (periodLower === 'semana') {
-                period = 'semana';
-            } else if (periodLower === 'dia' || periodLower === 'día') {
-                period = 'dia';
+            if (periodLower === 'week' || periodLower === 'semana') {
+                period = 'week';
+            } else if (periodLower === 'day' || periodLower === 'dia' || periodLower === 'día') {
+                period = 'day';
             } else if (periodArg.includes('/')) {
                 const [monthArg, yearArg] = periodArg.split('/');
                 month = parseInt(monthArg);
@@ -108,7 +108,7 @@ class CommandHandler {
 
                 if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
                     return interaction.editReply(
-                        '❌ Formato de fecha inválido. Usa MM/YYYY (ej: 09/2025)'
+                        '❌ Invalid date format. Use MM/YYYY (e.g: 09/2025)'
                     );
                 }
             }
@@ -119,7 +119,7 @@ class CommandHandler {
 
         if (filteredSessions.length === 0) {
             return interaction.editReply(
-                '📊 No hay datos para mostrar en el período seleccionado.'
+                '📊 No data to show for the selected period.'
             );
         }
 
@@ -132,7 +132,7 @@ class CommandHandler {
     async handleResetCommand(interaction) {
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             return interaction.reply({
-                content: '❌ Necesitas permisos de administrador para usar este comando.',
+                content: '❌ You need administrator permissions to use this command.',
                 ephemeral: true,
             });
         }
@@ -151,7 +151,7 @@ class CommandHandler {
 
             if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
                 return interaction.reply({
-                    content: '❌ Formato de fecha inválido. Usa MM/YYYY (ej: 09/2025)',
+                    content: '❌ Invalid date format. Use MM/YYYY (e.g: 09/2025)',
                     ephemeral: true,
                 });
             }
@@ -161,12 +161,12 @@ class CommandHandler {
 
         if (success) {
             await interaction.reply({
-                content: `✅ Datos de ${this.getPeriodText('mes', month, year)} eliminados correctamente.`,
+                content: `✅ Data for ${this.getPeriodText('month', month, year)} deleted successfully.`,
                 ephemeral: true,
             });
         } else {
             await interaction.reply({
-                content: '❌ No se encontraron datos para eliminar en ese período.',
+                content: '❌ No data found to delete for that period.',
                 ephemeral: true,
             });
         }
@@ -190,11 +190,11 @@ class CommandHandler {
             const data = await fs.readFile(filePath, 'utf8');
             userData = JSON.parse(data);
         } catch (error) {
-            return interaction.editReply('📊 No hay datos para mostrar en este mes.');
+            return interaction.editReply('📊 No data to show for this month.');
         }
 
         if (Object.keys(userData).length === 0) {
-            return interaction.editReply('📊 No hay minutos acumulados para mostrar en este mes.');
+            return interaction.editReply('📊 No accumulated minutes to show for this month.');
         }
 
         const embed = this.createLiveStatsEmbed(userData, interaction.guild.name, month, year);
@@ -203,11 +203,11 @@ class CommandHandler {
 
     createLiveStatsEmbed(userData, guildName, month, year) {
         const embed = new EmbedBuilder()
-            .setTitle(`📊 Minutos Acumulados - ${guildName}`)
+            .setTitle(`📊 Accumulated Minutes - ${guildName}`)
             .setColor(config.EMBED_COLOR)
             .setTimestamp();
 
-        // Ordenar usuarios por minutos acumulados
+        // Sort users by accumulated minutes
         const sortedUsers = Object.entries(userData)
             .sort((a, b) => b[1].totalMinutes - a[1].totalMinutes)
             .slice(0, 10); // Top 10
@@ -216,25 +216,25 @@ class CommandHandler {
             const userList = sortedUsers
                 .map((user, index) => {
                     const [, userInfo] = user;
-                    return `${index + 1}. **${userInfo.username}** - ${userInfo.totalMinutes} minutos`;
+                    return `${index + 1}. **${userInfo.username}** - ${userInfo.totalMinutes} minutes`;
                 })
                 .join('\n');
 
             embed.addFields({
-                name: `⏱️ Top Usuarios (${month.toString().padStart(2, '0')}/${year})`,
+                name: `⏱️ Top Users (${month.toString().padStart(2, '0')}/${year})`,
                 value: userList,
                 inline: false,
             });
         }
 
         embed.setFooter({
-            text: 'Datos del mes actual • Actualizados cada minuto',
+            text: 'Current month data • Updated every minute',
         });
 
         return embed;
     }
 
-    // Mantener compatibilidad con comandos de texto (opcional)
+    // Maintain compatibility with text commands (optional)
     async handleMessage(message) {
         if (message.author.bot || !message.content.startsWith('!')) return;
 
@@ -248,34 +248,34 @@ class CommandHandler {
 
     async showHelp(message) {
         const embed = new EmbedBuilder()
-            .setTitle('📖 Comandos del Bot de Tiempo de Voz')
+            .setTitle('📖 Voice Timer Bot Commands')
             .setColor(config.EMBED_COLOR)
             .setDescription(
-                'Este bot ahora usa **Slash Commands**. Escribe `/` y selecciona un comando:'
+                'This bot now uses **Slash Commands**. Type `/` and select a command:'
             )
             .addFields(
                 {
-                    name: '⚙️ `/config logchannel:#canal`',
-                    value: 'Configura el canal de logs (Admin)',
+                    name: '⚙️ `/config logchannel:#channel`',
+                    value: 'Configure log channel (Admin)',
                     inline: false,
                 },
                 {
-                    name: '📊 `/stats [período]`',
-                    value: 'Muestra estadísticas\n**Períodos:** `dia`, `semana`, `MM/YYYY`',
+                    name: '📊 `/stats [period]`',
+                    value: 'Show statistics\n**Periods:** `day`, `week`, `MM/YYYY`',
                     inline: false,
                 },
                 {
                     name: '⏱️ `/live`',
-                    value: 'Muestra minutos acumulados en tiempo real',
+                    value: 'Show accumulated minutes in real time',
                     inline: false,
                 },
                 {
-                    name: '🗑️ `/reset [período]`',
-                    value: 'Reinicia datos del período especificado (Admin)',
+                    name: '🗑️ `/reset [period]`',
+                    value: 'Reset data for specified period (Admin)',
                     inline: false,
                 }
             )
-            .setFooter({ text: 'El bot rastrea automáticamente el tiempo en canales de voz' });
+            .setFooter({ text: 'The bot automatically tracks time in voice channels' });
 
         message.reply({ embeds: [embed], ephemeral: true });
     }
@@ -283,13 +283,13 @@ class CommandHandler {
     filterSessionsByPeriod(sessions, period, _year, _month) {
         const now = new Date();
 
-        if (period === 'dia') {
+        if (period === 'day' || period === 'dia' || period === 'día') {
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             return sessions.filter(session => {
                 const sessionDate = new Date(session.joinTime);
                 return sessionDate >= today;
             });
-        } else if (period === 'semana') {
+        } else if (period === 'week' || period === 'semana') {
             const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
             return sessions.filter(session => {
                 const sessionDate = new Date(session.joinTime);
@@ -332,11 +332,11 @@ class CommandHandler {
         const { userStats, channelStats, totalTime, totalSessions } = stats;
 
         const embed = new EmbedBuilder()
-            .setTitle(`📊 Estadísticas de Voz - ${this.getPeriodText(period, month, year)}`)
+            .setTitle(`📊 Voice Statistics - ${this.getPeriodText(period, month, year)}`)
             .setColor(config.EMBED_COLOR)
             .addFields({
-                name: '📈 Resumen General',
-                value: `**Total de sesiones:** ${totalSessions}\n**Tiempo total:** ${this.formatDuration(totalTime)}`,
+                name: '📈 General Summary',
+                value: `**Total sessions:** ${totalSessions}\n**Total time:** ${this.formatDuration(totalTime)}`,
                 inline: false,
             });
 
@@ -353,7 +353,7 @@ class CommandHandler {
                 .join('\n');
 
             embed.addFields({
-                name: '👑 Top Usuarios',
+                name: '👑 Top Users',
                 value: userList,
                 inline: true,
             });
@@ -372,7 +372,7 @@ class CommandHandler {
                 .join('\n');
 
             embed.addFields({
-                name: '🎤 Top Canales',
+                name: '🎤 Top Channels',
                 value: channelList,
                 inline: true,
             });
@@ -382,22 +382,22 @@ class CommandHandler {
     }
 
     getPeriodText(period, month, year) {
-        if (period === 'dia') return 'Hoy';
-        if (period === 'semana') return 'Última semana';
+        if (period === 'day' || period === 'dia' || period === 'día') return 'Today';
+        if (period === 'week' || period === 'semana') return 'Last week';
 
         const monthNames = [
-            'Enero',
-            'Febrero',
-            'Marzo',
-            'Abril',
-            'Mayo',
-            'Junio',
-            'Julio',
-            'Agosto',
-            'Septiembre',
-            'Octubre',
-            'Noviembre',
-            'Diciembre',
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
         ];
 
         return `${monthNames[month - 1]} ${year}`;

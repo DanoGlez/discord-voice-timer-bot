@@ -13,12 +13,12 @@ class VoiceHandler {
             this.checkAndUpdateActiveSessions();
         }, 60000);
 
-        console.log('🕐 Sistema de revisión por minutos iniciado');
+        console.log('🕐 Minutely check system started');
     }
 
     async checkAndUpdateActiveSessions() {
-        const currentTime = new Date().toLocaleTimeString('es-ES');
-        console.log(`🔍 [${currentTime}] Revisando canales de voz...`);
+        const currentTime = new Date().toLocaleTimeString('en-US');
+        console.log(`🔍 [${currentTime}] Checking voice channels...`);
 
         const currentDetectedUsers = new Set();
         let totalUsersFound = 0;
@@ -45,15 +45,15 @@ class VoiceHandler {
 
         if (totalUsersFound > 0) {
             console.log(
-                `📊 [${currentTime}] Total: ${totalUsersFound} usuario(s) en ${totalChannelsWithUsers} canal(es) activo(s)`
+                `📊 [${currentTime}] Total: ${totalUsersFound} user(s) in ${totalChannelsWithUsers} active channel(s)`
             );
             if (minutesAdded > 0) {
                 console.log(
-                    `⏱️ [${currentTime}] +1 minuto añadido a ${minutesAdded} usuario(s) que permanecieron conectados`
+                    `⏱️ [${currentTime}] +1 minute added to ${minutesAdded} user(s) who remained connected`
                 );
             }
         } else {
-            console.log(`📊 [${currentTime}] No hay usuarios conectados en canales de voz`);
+            console.log(`📊 [${currentTime}] No users connected in voice channels`);
         }
     }
 
@@ -69,27 +69,27 @@ class VoiceHandler {
                 if (channel.members.size > 0) {
                     channelsWithUsers++;
                     console.log(
-                        `🎤 [${guild.name}] Canal "${channel.name}": ${channel.members.size} usuario(s)`
+                        `🎤 [${guild.name}] Channel "${channel.name}": ${channel.members.size} user(s)`
                     );
 
                     for (const member of channel.members.values()) {
                         if (!member.user.bot) {
-                            // Verificar si el usuario NO está ensordesido (deaf)
+                            // Check if user is NOT deafened
                             if (!member.voice.deaf) {
                                 const userKey = `${guild.id}_${member.id}`;
                                 detectedUsers.push(userKey);
                                 usersInVoice++;
 
-                                console.log(`  👁️ Detectado: ${member.displayName}`);
+                                console.log(`  👁️ Detected: ${member.displayName}`);
                             } else {
-                                console.log(`  🔇 Ensordesido (ignorado): ${member.displayName}`);
+                                console.log(`  🔇 Deafened (ignored): ${member.displayName}`);
                             }
                         }
                     }
                 }
             }
         } catch (error) {
-            console.error(`❌ Error revisando canales de voz en ${guild.name}:`, error);
+            console.error(`❌ Error checking voice channels in ${guild.name}:`, error);
         }
 
         return { usersCount: usersInVoice, channelsCount: channelsWithUsers, detectedUsers };
@@ -116,13 +116,13 @@ class VoiceHandler {
 
         await this.dataManager.saveVoiceSession(sessionData);
 
-        console.log(`  ✅ +1 minuto guardado para ${member.displayName}`);
+        console.log(`  ✅ +1 minute saved for ${member.displayName}`);
     }
 
     async stopMinutelyCheck() {
         if (this.minutelyInterval) {
             clearInterval(this.minutelyInterval);
-            console.log('🛑 Sistema de revisión por minutos detenido');
+            console.log('🛑 Minutely check system stopped');
         }
     }
 
@@ -144,7 +144,7 @@ class VoiceHandler {
 
             await this.logToChannel(
                 guildId,
-                `🟢 **${newState.member.displayName}** se conectó a **${newState.channel.name}**`
+                `🟢 **${newState.member.displayName}** connected to **${newState.channel.name}**`
             );
         } else if (oldState.channel && !newState.channel) {
             const session = this.activeSessions.get(sessionKey);
@@ -152,7 +152,7 @@ class VoiceHandler {
                 this.activeSessions.delete(sessionKey);
                 await this.logToChannel(
                     guildId,
-                    `🔴 **${session.username}** se desconectó de **${session.channelName}**`
+                    `🔴 **${session.username}** disconnected from **${session.channelName}**`
                 );
             }
         } else if (
@@ -170,7 +170,7 @@ class VoiceHandler {
 
                 await this.logToChannel(
                     guildId,
-                    `🔄 **${newState.member.displayName}** cambió de **${oldState.channel.name}** a **${newState.channel.name}**`
+                    `🔄 **${newState.member.displayName}** moved from **${oldState.channel.name}** to **${newState.channel.name}**`
                 );
             }
         }
@@ -190,7 +190,7 @@ class VoiceHandler {
                 }
             }
         } catch (error) {
-            console.error('Error enviando log:', error);
+            console.error('Error sending log:', error);
         }
     }
 

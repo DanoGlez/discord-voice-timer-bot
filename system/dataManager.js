@@ -12,9 +12,9 @@ class DataManager {
     async initializeDataFolder() {
         try {
             await fs.mkdir(config.DATA_FOLDER, { recursive: true });
-            console.log('📁 Carpeta de datos inicializada');
+            console.log('📁 Data folder initialized');
         } catch (error) {
-            console.error('Error creando carpeta de datos:', error);
+            console.error('Error creating data folder:', error);
         }
     }
 
@@ -27,9 +27,9 @@ class DataManager {
             for (const [guildId, guildConfig] of Object.entries(configs)) {
                 this.guildConfigs.set(guildId, guildConfig);
             }
-            console.log('⚙️ Configuraciones de servidores cargadas');
+            console.log('⚙️ Guild configurations loaded');
         } catch (error) {
-            console.log('⚙️ Archivo de configuración no encontrado, creando nuevo...');
+            console.log('⚙️ Configuration file not found, creating new one...');
         }
     }
 
@@ -39,7 +39,7 @@ class DataManager {
             const configs = Object.fromEntries(this.guildConfigs);
             await fs.writeFile(configPath, JSON.stringify(configs, null, 2));
         } catch (error) {
-            console.error('Error guardando configuraciones:', error);
+            console.error('Error saving configurations:', error);
         }
     }
 
@@ -50,7 +50,7 @@ class DataManager {
             const data = await fs.readFile(filePath, 'utf8');
             return JSON.parse(data);
         } catch (error) {
-            console.log('📝 No se encontraron sesiones activas previas');
+            console.log('📝 No previous active sessions found');
             return {};
         }
     }
@@ -61,9 +61,9 @@ class DataManager {
             const filePath = path.join(config.DATA_FOLDER, 'active_sessions.json');
             const sessionsObject = Object.fromEntries(activeSessions);
             await fs.writeFile(filePath, JSON.stringify(sessionsObject, null, 2));
-            console.log('💾 Sesiones activas guardadas');
+            console.log('💾 Active sessions saved');
         } catch (error) {
-            console.error('❌ Error guardando sesiones activas:', error);
+            console.error('❌ Error saving active sessions:', error);
         }
     }
 
@@ -74,7 +74,7 @@ class DataManager {
             const data = await fs.readFile(filePath, 'utf8');
             return JSON.parse(data);
         } catch (error) {
-            console.log('📊 No se encontraron minutos acumulados previos');
+            console.log('📊 No previous accumulated minutes found');
             return {};
         }
     }
@@ -84,9 +84,9 @@ class DataManager {
         try {
             const filePath = path.join(config.DATA_FOLDER, 'accumulated_minutes.json');
             await fs.writeFile(filePath, JSON.stringify(accumulatedMinutes, null, 2));
-            console.log('💾 Minutos acumulados guardados');
+            console.log('💾 Accumulated minutes saved');
         } catch (error) {
-            console.error('❌ Error guardando minutos acumulados:', error);
+            console.error('❌ Error saving accumulated minutes:', error);
         }
     }
 
@@ -103,7 +103,7 @@ class DataManager {
                 data = JSON.parse(existingData);
             } catch (error) {
                 // Si no existe el archivo, crear estructura vacía
-                console.log(`📝 Creando nuevo archivo de datos: ${fileName}`);
+                console.log(`📝 Creating new data file: ${fileName}`);
             }
 
             // Actualizar o crear entrada del usuario
@@ -115,13 +115,13 @@ class DataManager {
                 };
             }
 
-            // Añadir minutos
+            // Add minutes
             data[userKey].totalMinutes += sessionData.minutes || 1;
-            data[userKey].username = sessionData.username; // Actualizar nombre por si cambió
+            data[userKey].username = sessionData.username; // Update name in case it changed
 
             await fs.writeFile(filePath, JSON.stringify(data, null, 2));
         } catch (error) {
-            console.error('❌ Error guardando sesión de voz:', error);
+            console.error('❌ Error saving voice session:', error);
         }
     }
 
@@ -132,7 +132,7 @@ class DataManager {
             const data = await fs.readFile(filePath, 'utf8');
             return JSON.parse(data);
         } catch (error) {
-            return []; // Retornar array vacío si no existe el archivo
+            return []; // Return empty array if file doesn't exist
         }
     }
 

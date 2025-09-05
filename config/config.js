@@ -1,17 +1,17 @@
 module.exports = {
-    // Configuración global fija
+    // Fixed global configuration
     DATA_FOLDER: './data',
-    EMBED_COLOR: '#7289da', // Color azul Discord
+    EMBED_COLOR: '#7289da', // Discord blue color
 
-    // Slash Commands fijos
+    // Fixed Slash Commands
     SLASH_COMMANDS: [
         {
             name: 'stats',
-            description: 'Muestra estadísticas de tiempo en canales de voz',
+            description: 'Shows voice channel time statistics',
             options: [
                 {
                     name: 'periodo',
-                    description: 'Período de tiempo (dia, semana, o MM/YYYY)',
+                    description: 'Time period (day, week, or MM/YYYY)',
                     type: 3, // STRING
                     required: false,
                 },
@@ -19,11 +19,11 @@ module.exports = {
         },
         {
             name: 'reset',
-            description: 'Reinicia datos de tiempo (solo administradores)',
+            description: 'Reset time data (administrators only)',
             options: [
                 {
                     name: 'periodo',
-                    description: 'Período a reiniciar (MM/YYYY)',
+                    description: 'Period to reset (MM/YYYY)',
                     type: 3, // STRING
                     required: false,
                 },
@@ -31,11 +31,11 @@ module.exports = {
         },
         {
             name: 'config',
-            description: 'Configura el canal de logs (solo administradores)',
+            description: 'Configure log channel (administrators only)',
             options: [
                 {
                     name: 'logchannel',
-                    description: 'Canal para logs de voz',
+                    description: 'Channel for voice logs',
                     type: 7, // CHANNEL
                     required: true,
                 },
@@ -43,7 +43,7 @@ module.exports = {
         },
         {
             name: 'live',
-            description: 'Muestra minutos acumulados en tiempo real',
+            description: 'Shows accumulated minutes in real time',
             options: [],
         },
     ],

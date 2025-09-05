@@ -16,6 +16,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.1] - 2025-09-05
+
+### 🔧 Changed
+
+- **🌍 Language Internationalization**: Complete translation of all system messages, logs, and console output to English
+  - Console logs and system messages now in English
+  - Slash command descriptions translated
+  - Error messages and user feedback in English
+  - Help messages and embed content in English
+  - Maintained backward compatibility for Spanish period inputs (`dia`, `semana`)
+- **📚 Code Documentation**: All code comments translated to English for better international collaboration
+
+### 🐛 Fixed
+
+- **🕐 Time Locale**: Changed time display format from Spanish (`es-ES`) to English (`en-US`) for consistency
+- **📝 Console Output**: Standardized all console messages to English for universal understanding
+
+---
+
 ## [1.3.0] - 2025-09-05
 
 ### 🎉 Added
@@ -132,10 +151,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **🔒 Security** - for security improvements
 - **📚 Documentation** - for documentation changes
 - **⚡ Performance** - for performance improvements
-
----
-
-## Comparison Links
-
-[Unreleased]: https://github.com/danoglez/discord-voice-timer-bot/compare/v1.3.0...HEAD
-[1.3.0]: https://github.com/danoglez/discord-voice-timer-bot/compare/v1.2.0...v1.3.0

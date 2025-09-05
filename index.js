@@ -25,14 +25,14 @@ class VoiceTimerBot {
 
     setupEventListeners() {
         this.client.on('clientReady', async () => {
-            console.log(`✅ Bot conectado como ${this.client.user.tag}`);
-            console.log(`🎤 Monitoreando ${this.client.guilds.cache.size} servidor(es)`);
+            console.log(`✅ Bot connected as ${this.client.user.tag}`);
+            console.log(`🎤 Monitoring ${this.client.guilds.cache.size} server(s)`);
 
-            // Registrar slash commands
+            // Register slash commands
             await this.commandHandler.registerSlashCommands();
 
-            // Revisar usuarios ya conectados al iniciar
-            console.log('🔍 Revisando usuarios ya conectados...');
+            // Check already connected users on startup
+            console.log('🔍 Checking already connected users...');
             await this.voiceHandler.checkAndUpdateActiveSessions();
         });
 
@@ -41,60 +41,60 @@ class VoiceTimerBot {
             this.voiceHandler.handleVoiceStateUpdate(oldState, newState);
         });
 
-        // Eventos de slash commands
+        // Slash command events
         this.client.on('interactionCreate', interaction => {
             this.commandHandler.handleInteraction(interaction);
         });
 
-        // Mantener compatibilidad con comandos de texto para ayuda
+        // Maintain compatibility with text commands for help
         this.client.on('messageCreate', message => {
             this.commandHandler.handleMessage(message);
         });
 
-        // Manejo de errores
+        // Error handling
         this.client.on('error', error => {
-            console.error('Error del cliente Discord:', error);
+            console.error('Discord client error:', error);
         });
 
         process.on('unhandledRejection', error => {
             console.error('Unhandled Promise Rejection:', error);
         });
 
-        // Manejo de cierre del proceso
+        // Process shutdown handling
         process.on('SIGINT', () => {
-            console.log('\n🛑 Cerrando bot...');
+            console.log('\n🛑 Shutting down bot...');
             this.shutdown();
         });
 
         process.on('SIGTERM', () => {
-            console.log('\n🛑 Cerrando bot...');
+            console.log('\n🛑 Shutting down bot...');
             this.shutdown();
         });
     }
 
     async shutdown() {
-        console.log('🔄 Finalizando sesiones activas...');
+        console.log('🔄 Finalizing active sessions...');
         await this.voiceHandler.stopMinutelyCheck();
 
-        console.log('✅ Bot cerrado correctamente');
+        console.log('✅ Bot shut down correctly');
         process.exit(0);
     }
 
     start() {
         if (!process.env.DISCORD_TOKEN) {
             console.error(
-                '❌ Token de Discord no encontrado. Asegúrate de configurar DISCORD_TOKEN en el archivo .env'
+                '❌ Discord token not found. Make sure to configure DISCORD_TOKEN in the .env file'
             );
             process.exit(1);
         }
 
         this.client.login(process.env.DISCORD_TOKEN).catch(error => {
-            console.error('❌ Error al conectar con Discord:', error);
+            console.error('❌ Error connecting to Discord:', error);
             process.exit(1);
         });
     }
 }
 
-// Iniciar el bot
+// Start the bot
 const bot = new VoiceTimerBot();
 bot.start();
