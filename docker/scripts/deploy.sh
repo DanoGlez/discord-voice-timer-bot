@@ -15,6 +15,9 @@ if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/
     exit 1
 fi
 
+# Navigate to project root (one level up from docker/scripts)
+cd "$(dirname "$0")/../.." || exit 1
+
 # Check if .env file exists
 if [ ! -f .env ]; then
     echo "⚠️  .env file not found"
@@ -34,14 +37,17 @@ fi
 echo "📁 Creating necessary directories..."
 mkdir -p data logs
 
-# Build and run with Docker Compose
+# Build and run with Docker Compose from docker directory
 echo "🔨 Building Docker image..."
+cd docker
 docker-compose build
 
 echo "🚀 Starting the bot..."
 docker-compose up -d
 
 echo "✅ Bot deployed successfully!"
-echo "📊 To view logs: docker-compose logs -f"
-echo "🛑 To stop the bot: docker-compose down"
-echo "🔄 To restart: docker-compose restart"
+echo ""
+echo "📋 Useful commands:"
+echo "📊 View logs: cd docker && docker-compose logs -f"
+echo "🛑 Stop bot: cd docker && docker-compose down"
+echo "🔄 Restart: cd docker && docker-compose restart"

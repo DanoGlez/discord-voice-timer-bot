@@ -3,14 +3,12 @@
 ## Quick Start (⚡ 2 minutes)
 
 ### 1. Clone the repository
-
 ```bash
 git clone https://github.com/DanoGlez/discord-voice-timer-bot.git
 cd discord-voice-timer-bot
 ```
 
 ### 2. Configure Discord token
-
 ```bash
 # Copy example file
 cp .env.example .env
@@ -21,52 +19,73 @@ cp .env.example .env
 
 ### 3. Deploy!
 
-**Windows:**
-
-```cmd
-deploy.bat
+**Using Make (recommended):**
+```bash
+make deploy
 ```
 
-**Linux/Mac:**
-
+**Using scripts:**
 ```bash
-chmod +x deploy.sh
-./deploy.sh
+# Windows
+./docker/scripts/deploy.bat
+
+# Linux/Mac
+./docker/scripts/deploy.sh
 ```
 
 **Manual:**
-
 ```bash
+cd docker
 docker-compose up -d
 ```
 
 Done! 🎉 Your bot is running.
 
+## 📁 Docker Structure
+
+All Docker-related files are now organized in the `docker/` directory:
+
+```
+docker/
+├── Dockerfile                  # Container image definition
+├── docker-compose.yml          # Main configuration
+├── docker-compose.dev.yml      # Development overrides
+├── docker-compose.prod.yml     # Production overrides
+├── .dockerignore              # Build context exclusions
+├── README.md                  # Docker-specific documentation
+└── scripts/
+    ├── deploy.sh              # Linux/Mac deployment
+    └── deploy.bat             # Windows deployment
+```
+
 ## Useful Commands
 
 ### Bot Management
-
 ```bash
-# View real-time logs
+# Using Make (from project root)
+make logs          # View real-time logs
+make down          # Stop the bot
+make restart       # Restart the bot
+make status        # Check status
+
+# Using Docker Compose (from docker/ directory)
+cd docker
 docker-compose logs -f
-
-# Stop the bot
 docker-compose down
-
-# Restart the bot
 docker-compose restart
-
-# Check status
 docker-compose ps
 ```
 
 ### Updates
-
 ```bash
-# Update code
+# Using Make
 git pull
+make build
+make up
 
-# Rebuild and restart
+# Using Docker Compose
+git pull
+cd docker
 docker-compose build
 docker-compose up -d
 ```
@@ -74,21 +93,26 @@ docker-compose up -d
 ## Advanced Configurations
 
 ### Development
-
 ```bash
-# Use development configuration
+# Using Make
+make dev
+
+# Using Docker Compose
+cd docker
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
 ### Production
-
 ```bash
-# Use production configuration
+# Using Make
+make prod
+
+# Using Docker Compose
+cd docker
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 ### Data Backup
-
 ```bash
 # Create backup of data folder
 tar -czf bot-backup-$(date +%Y%m%d).tar.gz data/
@@ -100,27 +124,25 @@ tar -xzf bot-backup-YYYYMMDD.tar.gz
 ## Troubleshooting
 
 ### Bot won't start
-
 1. Verify token is configured in `.env`
-2. Check logs: `docker-compose logs`
+2. Check logs: `make logs` or `cd docker && docker-compose logs`
 
 ### File permissions
-
 ```bash
 # On Linux/Mac, if permission issues occur
 sudo chown -R $USER:$USER data/
 ```
 
 ### Clean everything and start fresh
-
 ```bash
-# Stop and remove containers
-docker-compose down
+# Using Make
+make down
+make clean
+make deploy
 
-# Remove image
+# Using Docker Compose
+cd docker
 docker-compose down --rmi all
-
-# Rebuild from scratch
 docker-compose build --no-cache
 docker-compose up -d
 ```

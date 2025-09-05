@@ -10,6 +10,13 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+REM Navigate to project root (two levels up from docker\scripts)
+cd /d "%~dp0..\.." || (
+    echo ❌ Could not navigate to project root
+    pause
+    exit /b 1
+)
+
 REM Check if .env file exists
 if not exist .env (
     echo ⚠️  .env file not found
@@ -30,15 +37,18 @@ echo 📁 Creating necessary directories...
 if not exist data mkdir data
 if not exist logs mkdir logs
 
-REM Build and run with Docker Compose
+REM Build and run with Docker Compose from docker directory
 echo 🔨 Building Docker image...
+cd docker
 docker-compose build
 
 echo 🚀 Starting the bot...
 docker-compose up -d
 
 echo ✅ Bot deployed successfully!
-echo 📊 To view logs: docker-compose logs -f
-echo 🛑 To stop the bot: docker-compose down
-echo 🔄 To restart: docker-compose restart
+echo.
+echo 📋 Useful commands:
+echo 📊 View logs: cd docker ^&^& docker-compose logs -f
+echo 🛑 Stop bot: cd docker ^&^& docker-compose down
+echo 🔄 Restart: cd docker ^&^& docker-compose restart
 pause

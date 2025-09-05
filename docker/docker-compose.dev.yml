@@ -1,0 +1,30 @@
+# Docker Compose Override for Development
+# This file can be used for development-specific configurations
+# Use with: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+version: '3.8'
+
+services:
+  discord-bot:
+    # Uncomment for development mode with auto-reload
+    # volumes:
+    #   - ../:/app:ro
+    #   - /app/node_modules
+    #   - ../data:/app/data:rw
+    # command: npm run dev
+    
+    # Additional environment variables for development
+    environment:
+      - NODE_ENV=development
+      - DEBUG=discord-bot:*
+    
+    # Expose port for debugging
+    ports:
+      - "3000:3000"
+    
+    # More verbose logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

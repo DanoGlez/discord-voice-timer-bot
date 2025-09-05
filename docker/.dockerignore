@@ -1,10 +1,10 @@
-# Dependencias
+# Dependencies
 node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Archivos de entorno
+# Environment files
 .env
 .env.local
 .env.development.local
@@ -15,16 +15,16 @@ yarn-error.log*
 logs
 *.log
 
-# Archivos temporales
+# Temporary files
 .tmp
 *.tmp
 *.temp
 
-# Archivos del sistema operativo
+# OS files
 .DS_Store
 Thumbs.db
 
-# Archivos de IDE
+# IDE files
 .vscode/
 .idea/
 *.swp
@@ -34,19 +34,20 @@ Thumbs.db
 .git
 .gitignore
 
-# Docker
+# Docker (exclude from image)
+docker/
 Dockerfile
-docker-compose.yml
+docker-compose*.yml
 .dockerignore
 
-# Documentación (opcional, mantener si se necesita en el contenedor)
+# Documentation (optional, keep if needed in container)
 README.md
 CHANGELOG.md
 CONTRIBUTING.md
 SECURITY.md
 LICENSE
 
-# Archivos de desarrollo
+# Development files
 .eslintrc*
 .prettierrc*
 nodemon.json
