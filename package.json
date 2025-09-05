@@ -1,0 +1,69 @@
+{
+    "name": "discord-voice-timer-bot",
+    "version": "1.2.0",
+    "description": "🎤 Modern Discord bot that automatically tracks voice channel time with smart filtering and real-time statistics",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test": "node --test",
+        "lint": "eslint . --ext .js",
+        "lint:fix": "eslint . --ext .js --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "prepare": "npm run lint && npm run format:check"
+    },
+    "keywords": [
+        "discord",
+        "bot",
+        "voice",
+        "timer",
+        "statistics",
+        "discord.js",
+        "voice-channels",
+        "time-tracking",
+        "slash-commands",
+        "modular",
+        "multi-server"
+    ],
+    "author": {
+        "name": "DanoGlez",
+        "email": "contact@danoglez.com",
+        "url": "https://github.com/DanoGlez"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DanoGlez/discord-voice-timer-bot.git"
+    },
+    "bugs": {
+        "url": "https://github.com/DanoGlez/discord-voice-timer-bot/issues"
+    },
+    "homepage": "https://github.com/DanoGlez/discord-voice-timer-bot#readme",
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=8.0.0"
+    },
+    "dependencies": {
+        "discord.js": "^14.14.1",
+        "dotenv": "^16.4.5"
+    },
+    "devDependencies": {
+        "eslint": "^8.57.1",
+        "nodemon": "^3.1.10",
+        "prettier": "^3.6.2"
+    },
+    "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/DanoGlez"
+    },
+    "os": [
+        "linux",
+        "darwin",
+        "win32"
+    ],
+    "cpu": [
+        "x64",
+        "arm64"
+    ]
+}

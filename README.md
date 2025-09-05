@@ -52,7 +52,7 @@
 1. **Clone the repository**
 
     ```bash
-    git clone https://github.com/danoglez/discord-voice-timer-bot.git
+    git clone https://github.com/DanoGlez/discord-voice-timer-bot.git
     cd discord-voice-timer-bot
     ```
 
