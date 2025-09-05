@@ -17,15 +17,14 @@ RUN npm ci --only=production --ignore-scripts && npm cache clean --force
 # Copy source code
 COPY . .
 
-# Create directory for persistent data
-RUN mkdir -p /app/data && chmod 755 /app/data
-
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S botuser -u 1001 -G nodejs
 
-# Change ownership of files to non-root user
-RUN chown -R botuser:nodejs /app
+# Create directory for persistent data with proper ownership
+RUN mkdir -p /app/data && \
+    chown -R botuser:nodejs /app && \
+    chmod 755 /app/data
 
 # Switch to non-root user
 USER botuser

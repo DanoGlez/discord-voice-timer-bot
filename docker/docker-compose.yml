@@ -12,10 +12,10 @@ services:
     env_file:
       - ../.env
     volumes:
-      # Mount data directory for persistence
-      - ../data:/app/data:rw
-      # Optional: mount logs if implemented
-      - ../logs:/app/logs:rw
+      # Mount data directory for persistence using named volume
+      - bot-data:/app/data
+      # Optional: mount logs if implemented  
+      - bot-logs:/app/logs
     networks:
       - bot-network
     # Optional healthcheck
@@ -41,4 +41,6 @@ networks:
 
 volumes:
   bot-data:
+    driver: local
+  bot-logs:
     driver: local
