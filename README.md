@@ -210,7 +210,7 @@ make clean
 make deploy
 ```
 
-**For more detailed troubleshooting, see [DOCKER.md](DOCKER.md)**
+**For more detailed troubleshooting, see [DOCKER.md](./docs/DOCKER.md)**
 
 ### Environment Variables
 
@@ -228,8 +228,8 @@ PORT=3000
 
 ### Quick References
 
-- 🐳 **[DOCKER.md](DOCKER.md)** - Complete Docker deployment guide with troubleshooting
-- 📋 **[CHANGELOG.md](CHANGELOG.md)** - Detailed version history and changes
+- 🐳 **[DOCKER.md](./docs/DOCKER.md)** - Complete Docker deployment guide with troubleshooting
+- 📋 **[CHANGELOG.md](./docs/CHANGELOG.md)** - Detailed version history and changes
 - 🤝 **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
 - 🔒 **[SECURITY.md](SECURITY.md)** - Security policy and vulnerability reporting
 

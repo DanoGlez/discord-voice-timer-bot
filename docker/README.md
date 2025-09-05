@@ -110,4 +110,4 @@ make clean
 make deploy
 ```
 
-For more detailed troubleshooting, see the main [DOCKER.md](../DOCKER.md) file.
+For more detailed troubleshooting, see the main [DOCKER.md](../docs/DOCKER.md) file.

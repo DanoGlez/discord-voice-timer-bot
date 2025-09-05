@@ -16,7 +16,7 @@ make down
 make restart
 ```
 
-For more detailed Docker documentation, see [docker/README.md](docker/README.md) and [DOCKER.md](DOCKER.md).
+For more detailed Docker documentation, see [docker/README.md](../docker/README.md) and [DOCKER.md](DOCKER.md).
 
 ## Alternative Scripts
 
