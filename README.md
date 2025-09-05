@@ -9,7 +9,7 @@
 
 **A modern and efficient Discord bot that automatically tracks the time users spend in voice channels**
 
-[🚀 Installation](#-installation) • [📖 Commands](#-commands) • [⚙️ Configuration](#️-configuration) • [🤝 Contributing](#-contributing)
+[🚀 Installation](#-installation) • [� Docker](#-docker-installation-recommended) • [�📖 Commands](#-commands) • [📚 Documentation](#-documentation) • [⚙️ Configuration](#️-configuration) • [🤝 Contributing](#-contributing)
 
 </div>
 
@@ -74,6 +74,128 @@
     npm start
     ```
 
+## 🐳 Docker Installation (Recommended)
+
+> 🚀 **Deploy in under 2 minutes!** Docker provides the fastest and most reliable way to get your bot running.
+
+### Why Docker?
+
+- ✅ **Zero Dependencies**: No need to install Node.js or manage versions
+- 🔒 **Enhanced Security**: Isolated environment with non-root execution
+- 📦 **Universal Compatibility**: Works on Windows, Linux, and macOS
+- 🔄 **Effortless Updates**: One command to update everything
+- 📊 **Resource Control**: Built-in CPU and memory limits
+- 💾 **Data Persistence**: Your bot data is automatically preserved
+- 🏥 **Health Monitoring**: Automatic restart if the bot crashes
+
+### Quick Start with Docker
+
+#### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/get-started) (includes Docker Compose)
+- A Discord bot token from [Discord Developer Portal](https://discord.com/developers/applications)
+
+#### ⚡ Super Quick Deployment
+
+1. **Get the code**
+    ```bash
+    git clone https://github.com/DanoGlez/discord-voice-timer-bot.git
+    cd discord-voice-timer-bot
+    ```
+
+2. **One-click deployment**
+    
+    **Windows:**
+    ```cmd
+    deploy.bat
+    ```
+    
+    **Linux/macOS:**
+    ```bash
+    chmod +x deploy.sh && ./deploy.sh
+    ```
+
+3. **That's it!** 🎉 Your bot is now running and will automatically restart if it crashes.
+
+#### Manual Deployment (Alternative)
+
+If you prefer to do it step by step:
+
+```bash
+# 1. Copy and configure environment
+cp .env.example .env
+# Edit .env and add your DISCORD_TOKEN
+
+# 2. Build and start
+docker-compose up -d
+
+# 3. Check if it's running
+docker-compose logs -f
+```
+
+### Docker Management
+
+#### Essential Commands
+
+```bash
+# 📊 View real-time logs
+docker-compose logs -f
+
+# ⏹️ Stop the bot
+docker-compose down
+
+# 🔄 Restart the bot
+docker-compose restart
+
+# 📈 Check bot status and resource usage
+docker-compose ps
+docker stats discord-voice-timer-bot
+```
+
+#### Updates & Maintenance
+
+```bash
+# 🔄 Update to latest version
+git pull
+docker-compose build
+docker-compose up -d
+
+# 🧹 Clean up old images (optional)
+docker system prune -f
+
+# 💾 Backup your bot data
+tar -czf bot-backup-$(date +%Y%m%d).tar.gz data/
+```
+
+### Advanced Docker Configurations
+
+#### Development Mode
+Perfect for testing changes:
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+```
+
+#### Production Mode
+Optimized for servers:
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+### Troubleshooting
+
+**Bot won't start?**
+1. Check your token: `cat .env | grep DISCORD_TOKEN`
+2. View logs: `docker-compose logs`
+
+**Need to reset everything?**
+```bash
+docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+**For more detailed troubleshooting, see [DOCKER.md](DOCKER.md)**
+
 ### Environment Variables
 
 Create a `.env` file in the project root:
@@ -86,7 +208,24 @@ DISCORD_TOKEN=your_token_here
 PORT=3000
 ```
 
-## 📖 Commands
+## � Documentation
+
+### Quick References
+
+- 🐳 **[DOCKER.md](DOCKER.md)** - Complete Docker deployment guide with troubleshooting
+- 📋 **[CHANGELOG.md](CHANGELOG.md)** - Detailed version history and changes
+- 🤝 **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
+- 🔒 **[SECURITY.md](SECURITY.md)** - Security policy and vulnerability reporting
+
+### Configuration Files
+
+- 📄 **`.env.example`** - Environment variables template
+- 🐳 **`docker-compose.yml`** - Main Docker configuration
+- 🔧 **`docker-compose.dev.yml`** - Development environment settings
+- 🏭 **`docker-compose.prod.yml`** - Production optimized settings
+- 🚀 **`deploy.bat` / `deploy.sh`** - One-click deployment scripts
+
+## �📖 Commands
 
 The bot uses modern **Slash Commands**. Type `/` in Discord and select:
 

@@ -16,6 +16,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2025-09-05
+
+### 🎉 Added
+
+- **🐳 Docker Support**: Complete containerization for easy deployment
+  - `Dockerfile` with Alpine Linux for lightweight images
+  - `docker-compose.yml` for orchestration with data persistence
+  - Automated deployment scripts (`deploy.bat` for Windows, `deploy.sh` for Linux/Mac)
+  - Development and production Docker configurations
+- **📖 Docker Documentation**: Comprehensive `DOCKER.md` guide with:
+  - 2-minute quick start instructions
+  - Advanced configuration options
+  - Troubleshooting guide
+  - Monitoring and maintenance commands
+- **🔒 Security Improvements**: Non-root user execution in containers
+- **📊 Resource Management**: CPU and memory limits for production deployments
+- **🔄 Auto-restart**: Automatic bot restart on failures
+- **📝 Log Rotation**: Automatic log management to prevent disk space issues
+- **🏥 Health Checks**: Container health monitoring
+- **⚙️ CI/CD Pipeline**: GitHub Actions workflow for automated Docker builds
+
+### 🔧 Changed
+
+- **📚 Documentation**: Updated README.md with Docker installation section
+- **🔧 Configuration**: Enhanced `.gitignore` with Docker-specific entries
+- **📦 Project Structure**: Added Docker-related configuration files
+
+### 📚 Documentation
+
+- **DOCKER.md**: Complete Docker deployment guide
+- **README.md**: Added Docker installation instructions with quick start
+- **GitHub Actions**: Automated build and security scanning workflow
+- **Environment Templates**: Enhanced `.env.example` with Docker considerations
+
+---
+
 ## [1.2.0] - 2025-09-05
 
 ### 🎉 Added
@@ -101,4 +137,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison Links
 
-[Unreleased]: https://github.com/danoglez/discord-voice-timer-bot/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/danoglez/discord-voice-timer-bot/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/danoglez/discord-voice-timer-bot/compare/v1.2.0...v1.3.0

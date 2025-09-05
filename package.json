@@ -1,6 +1,6 @@
 {
     "name": "discord-voice-timer-bot",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "🎤 Modern Discord bot that automatically tracks voice channel time with smart filtering and real-time statistics",
     "main": "index.js",
     "scripts": {

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  discord-bot:
+    build: .
+    container_name: discord-voice-timer-bot
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    volumes:
+      # Mount data directory for persistence
+      - ./data:/app/data:rw
+      # Optional: mount logs if implemented
+      - ./logs:/app/logs:rw
+    networks:
+      - bot-network
+    # Optional healthcheck
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # Limit resources to prevent excessive usage
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+networks:
+  bot-network:
+    driver: bridge
+
+volumes:
+  bot-data:
+    driver: local
